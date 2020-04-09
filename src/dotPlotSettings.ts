@@ -27,7 +27,7 @@
 module powerbi.extensibility.visual {
     import LegendPosition = powerbi.extensibility.utils.chart.legend.LegendPosition;
 
-    export module enumSettings {
+    export module dotPlotSettings {
         // Default values for format settings
         export function getDefaultGradientSelectorSettings(): IGradientSelectorSettings {
             return {
@@ -270,131 +270,131 @@ module powerbi.extensibility.visual {
                 maxColor: DataViewObjectPropertyIdentifier;
             };
         } = {
-                RangeSelector: {
-                    dotsColor: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'dotsColor' },
-                    style: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'style' },
-                    shape: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'shape' },
-                    border: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'border' },
-                    borderColor: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'borderColor' },
-                    max: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'max' },
-                    min: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'min' },
-                    hoverColor: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'hoverColor' },
-                    transparency: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'transparency' }
+            RangeSelector: {
+                dotsColor: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'dotsColor' },
+                style: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'style' },
+                shape: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'shape' },
+                border: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'border' },
+                borderColor: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'borderColor' },
+                max: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'max' },
+                min: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'min' },
+                hoverColor: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'hoverColor' },
+                transparency: <DataViewObjectPropertyIdentifier>{ objectName: 'RangeSelector', propertyName: 'transparency' }
+            },
+            colorSelector: {
+                fill: <DataViewObjectPropertyIdentifier>{ objectName: 'colorSelector', propertyName: 'fill' }
+            },
+            flip: {
+                orient: <DataViewObjectPropertyIdentifier>{ objectName: 'flip', propertyName: 'orient' },
+                flipText: <DataViewObjectPropertyIdentifier>{ objectName: 'flip', propertyName: 'flipText' },
+                flipParentText: <DataViewObjectPropertyIdentifier>{ objectName: 'flip', propertyName: 'flipParentText' }
+            },
+            sort: {
+                axis: <DataViewObjectPropertyIdentifier>{ objectName: 'sort', propertyName: 'axis' },
+                parent: <DataViewObjectPropertyIdentifier>{ objectName: 'sort', propertyName: 'parent' }
+            },
+            highlight: {
+                show: <DataViewObjectPropertyIdentifier>{ objectName: 'highlight', propertyName: 'show' }
+            },
+            jitter: {
+                show: <DataViewObjectPropertyIdentifier>{ objectName: 'jitter', propertyName: 'show' }
+            },
+            legendSettings: {
+                fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'fontSize' },
+                fontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'fontFamily' },
+                labelColor: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'labelColor' },
+                legendName: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'titleText' },
+                position: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'position' },
+                show: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'show' },
+                showTitle: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'showTitle' },
+                sizeLegendColor: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'sizeLegendColor' },
+                displayUnits: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'displayUnits' },
+                decimalPlaces: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'decimalPlaces' }
+            },
+            xAxisConfig: {
+                scale: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'scale' },
+                start: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'start' },
+                end: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'end' },
+                decimalPlaces: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'decimalPlaces' },
+                displayUnits: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'displayUnits' },
+                fontColor: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'fill' },
+                fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'fontSize' },
+                labelsFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'labelsFontFamily' },
+                show: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'show' },
+                showTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'showTicks' },
+                minWidth: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'minWidth' },
+                showTitle: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'showTitle' },
+                titleText: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleText' },
+                titleColor: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleColor' },
+                titleSize: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleSize' },
+                titleFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleFontFamily' }
+            },
+            yAxisConfig: {
+                start: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'start' },
+                position: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'position' },
+                scale: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'scale' },
+                end: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'end' },
+                decimalPlaces: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'decimalPlaces' },
+                displayUnits: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'displayUnits' },
+                fontColor: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'fill' },
+                fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'fontSize' },
+                labelsFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'labelsFontFamily' },
+                show: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'show' },
+                showTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'showTicks' },
+                minWidth: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'minWidth' },
+                showTitle: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'showTitle' },
+                titleText: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleText' },
+                titleColor: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleColor' },
+                titleSize: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleSize' },
+                titleFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleFontFamily' }
+            },
+            parentAxisConfig: {
+                split: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'split' },
+                fontColor: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'fontColor' },
+                fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'fontSize' },
+                fontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'fontFamily' },
+                showTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'showTicks' },
+                showLines: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'showLines' },
+                thickness: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'thickness' }
+            },
+            backgroundBanding: {
+                showBackground: <DataViewObjectPropertyIdentifier>{ objectName: 'backgroundBanding', propertyName: 'show' },
+                bgPrimaryColor: <DataViewObjectPropertyIdentifier>{ objectName: 'backgroundBanding', propertyName: 'bgPrimaryColor' },
+                bgSecondaryColor: <DataViewObjectPropertyIdentifier>{
+                    objectName: 'backgroundBanding',
+                    propertyName: 'bgSecondaryColor'
                 },
-                colorSelector: {
-                    fill: <DataViewObjectPropertyIdentifier>{ objectName: 'colorSelector', propertyName: 'fill' }
+                bgTransparency: <DataViewObjectPropertyIdentifier>{ objectName: 'backgroundBanding', propertyName: 'bgTransparency' }
+            },
+            gridLines: {
+                showAxisGridLines: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'showAxisGridLines' },
+                axisStyle: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'axisStyle' },
+                thickness: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'thickness' },
+                color: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'color' },
+                showCategoryGridLines: <DataViewObjectPropertyIdentifier>{
+                    objectName: 'gridLines',
+                    propertyName: 'showCategoryGridLines'
                 },
-                flip: {
-                    orient: <DataViewObjectPropertyIdentifier>{ objectName: 'flip', propertyName: 'orient' },
-                    flipText: <DataViewObjectPropertyIdentifier>{ objectName: 'flip', propertyName: 'flipText' },
-                    flipParentText: <DataViewObjectPropertyIdentifier>{ objectName: 'flip', propertyName: 'flipParentText' }
+                categoryStyle: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'categoryStyle' },
+                categoryThickness: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'categoryThickness' },
+                categoryColor: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'categoryColor' }
+            },
+            tickMarks: {
+                showAxisTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'showAxisTicks' },
+                thickness: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'thickness' },
+                color: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'color' },
+                showCategoryTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'showCategoryTicks' },
+                categoryTickThickness: <DataViewObjectPropertyIdentifier>{
+                    objectName: 'tickMarks',
+                    propertyName: 'categoryTickThickness'
                 },
-                sort: {
-                    axis: <DataViewObjectPropertyIdentifier>{ objectName: 'sort', propertyName: 'axis' },
-                    parent: <DataViewObjectPropertyIdentifier>{ objectName: 'sort', propertyName: 'parent' }
-                },
-                highlight: {
-                    show: <DataViewObjectPropertyIdentifier>{ objectName: 'highlight', propertyName: 'show' }
-                },
-                jitter: {
-                    show: <DataViewObjectPropertyIdentifier>{ objectName: 'jitter', propertyName: 'show' }
-                },
-                legendSettings: {
-                    fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'fontSize' },
-                    fontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'fontFamily' },
-                    labelColor: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'labelColor' },
-                    legendName: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'titleText' },
-                    position: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'position' },
-                    show: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'show' },
-                    showTitle: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'showTitle' },
-                    sizeLegendColor: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'sizeLegendColor' },
-                    displayUnits: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'displayUnits' },
-                    decimalPlaces: <DataViewObjectPropertyIdentifier>{ objectName: 'legend', propertyName: 'decimalPlaces' }
-                },
-                xAxisConfig: {
-                    scale: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'scale' },
-                    start: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'start' },
-                    end: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'end' },
-                    decimalPlaces: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'decimalPlaces' },
-                    displayUnits: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'displayUnits' },
-                    fontColor: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'fill' },
-                    fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'fontSize' },
-                    labelsFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'labelsFontFamily' },
-                    show: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'show' },
-                    showTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'showTicks' },
-                    minWidth: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'minWidth' },
-                    showTitle: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'showTitle' },
-                    titleText: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleText' },
-                    titleColor: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleColor' },
-                    titleSize: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleSize' },
-                    titleFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'xAxis', propertyName: 'titleFontFamily' }
-                },
-                yAxisConfig: {
-                    start: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'start' },
-                    position: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'position' },
-                    scale: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'scale' },
-                    end: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'end' },
-                    decimalPlaces: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'decimalPlaces' },
-                    displayUnits: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'displayUnits' },
-                    fontColor: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'fill' },
-                    fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'fontSize' },
-                    labelsFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'labelsFontFamily' },
-                    show: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'show' },
-                    showTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'showTicks' },
-                    minWidth: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'minWidth' },
-                    showTitle: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'showTitle' },
-                    titleText: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleText' },
-                    titleColor: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleColor' },
-                    titleSize: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleSize' },
-                    titleFontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'yAxis', propertyName: 'titleFontFamily' }
-                },
-                parentAxisConfig: {
-                    split: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'split' },
-                    fontColor: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'fontColor' },
-                    fontSize: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'fontSize' },
-                    fontFamily: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'fontFamily' },
-                    showTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'showTicks' },
-                    showLines: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'showLines' },
-                    thickness: <DataViewObjectPropertyIdentifier>{ objectName: 'parentAxis', propertyName: 'thickness' }
-                },
-                backgroundBanding: {
-                    showBackground: <DataViewObjectPropertyIdentifier>{ objectName: 'backgroundBanding', propertyName: 'show' },
-                    bgPrimaryColor: <DataViewObjectPropertyIdentifier>{ objectName: 'backgroundBanding', propertyName: 'bgPrimaryColor' },
-                    bgSecondaryColor: <DataViewObjectPropertyIdentifier>{
-                        objectName: 'backgroundBanding',
-                        propertyName: 'bgSecondaryColor'
-                    },
-                    bgTransparency: <DataViewObjectPropertyIdentifier>{ objectName: 'backgroundBanding', propertyName: 'bgTransparency' }
-                },
-                gridLines: {
-                    showAxisGridLines: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'showAxisGridLines' },
-                    axisStyle: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'axisStyle' },
-                    thickness: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'thickness' },
-                    color: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'color' },
-                    showCategoryGridLines: <DataViewObjectPropertyIdentifier>{
-                        objectName: 'gridLines',
-                        propertyName: 'showCategoryGridLines'
-                    },
-                    categoryStyle: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'categoryStyle' },
-                    categoryThickness: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'categoryThickness' },
-                    categoryColor: <DataViewObjectPropertyIdentifier>{ objectName: 'gridLines', propertyName: 'categoryColor' }
-                },
-                tickMarks: {
-                    showAxisTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'showAxisTicks' },
-                    thickness: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'thickness' },
-                    color: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'color' },
-                    showCategoryTicks: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'showCategoryTicks' },
-                    categoryTickThickness: <DataViewObjectPropertyIdentifier>{
-                        objectName: 'tickMarks',
-                        propertyName: 'categoryTickThickness'
-                    },
-                    categoryTickColor: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'categoryTickColor' }
-                },
-                gradientSelector: {
-                    minColor: <DataViewObjectPropertyIdentifier>{ objectName: 'gradientSelector', propertyName: 'minColor' },
-                    maxColor: <DataViewObjectPropertyIdentifier>{ objectName: 'gradientSelector', propertyName: 'maxColor' }
-                }
-            };
+                categoryTickColor: <DataViewObjectPropertyIdentifier>{ objectName: 'tickMarks', propertyName: 'categoryTickColor' }
+            },
+            gradientSelector: {
+                minColor: <DataViewObjectPropertyIdentifier>{ objectName: 'gradientSelector', propertyName: 'minColor' },
+                maxColor: <DataViewObjectPropertyIdentifier>{ objectName: 'gradientSelector', propertyName: 'maxColor' }
+            }
+        };
 
         export function getAxisSettings(dataView: DataView, axis: string): IAxisSettings {
             let axisSetting: IAxisSettings = getDefaultAxisSettings();
@@ -897,31 +897,45 @@ module powerbi.extensibility.visual {
             } = {};
             if (Visual.catSizePresent || Visual.isColorCategoryPresent) {
                 props = {
-                    show: legendConfig.show,
-                    position: LegendPosition[Visual.legend.getOrientation()],
-                    fontSize: legendConfig.fontSize,
-                    fontFamily: legendConfig.fontFamily,
-                    labelColor: legendConfig.labelColor
-                };
-                if (Visual.catSizePresent && Visual.isColorCategoryPresent) {
-                    props[`showTitle`] = legendConfig.showTitle;
-                    props[`titleText`] = legendConfig.legendName;
-                    props[`sizeLegendColor`] = legendConfig.sizeLegendColor;
-                    props[`displayUnits`] = legendConfig.displayUnits;
-                    props[`decimalPlaces`] = legendConfig.decimalPlaces;
-                } else if (Visual.catSizePresent && !Visual.isColorCategoryPresent) {
-                    props[`sizeLegendColor`] = legendConfig.sizeLegendColor;
-                    props[`displayUnits`] = legendConfig.displayUnits;
-                    props[`decimalPlaces`] = legendConfig.decimalPlaces;
-                } else {
-                    props[`showTitle`] = legendConfig.showTitle;
-                    props[`titleText`] = legendConfig.legendName;
+                    show: legendConfig.show
                 }
-                instance.push({
-                    objectName: objectName,
-                    properties: props,
-                    selector: null
-                });
+                if (legendConfig.show) {
+                    props = {
+                        show: legendConfig.show,
+                        position: LegendPosition[Visual.legend.getOrientation()],
+                        fontSize: legendConfig.fontSize,
+                        fontFamily: legendConfig.fontFamily,
+                        labelColor: legendConfig.labelColor
+                    };
+                    if (Visual.catSizePresent && Visual.isColorCategoryPresent) {
+                        props[`showTitle`] = legendConfig.showTitle;
+                        props[`titleText`] = legendConfig.legendName;
+                        props[`sizeLegendColor`] = legendConfig.sizeLegendColor;
+                        props[`displayUnits`] = legendConfig.displayUnits;
+                        props[`decimalPlaces`] = legendConfig.decimalPlaces;
+                    } else if (Visual.catSizePresent && !Visual.isColorCategoryPresent) {
+                        props[`sizeLegendColor`] = legendConfig.sizeLegendColor;
+                        props[`displayUnits`] = legendConfig.displayUnits;
+                        props[`decimalPlaces`] = legendConfig.decimalPlaces;
+                    } else {
+                        props[`showTitle`] = legendConfig.showTitle;
+                        props[`titleText`] = legendConfig.legendName;
+                    }
+                    instance.push({
+                        objectName: objectName,
+                        properties: props,
+                        selector: null
+                    });
+                } else {
+                    props = {
+                        show: false
+                    }
+                    instance.push({
+                        objectName: objectName,
+                        properties: props,
+                        selector: null
+                    });
+                }
             }
         }
 
@@ -1138,9 +1152,9 @@ module powerbi.extensibility.visual {
             });
         }
 
-        /* do not update*/
+        // do not update
         export module DataViewObjects {
-            /** Gets the value of the given object/property pair. */
+            // Gets the value of the given object/property pair.
             export function getValue<T>(objects: DataViewObjects, propertyId: DataViewObjectPropertyIdentifier, defaultValue?: T): T {
 
                 if (!objects) { return defaultValue; }
@@ -1151,25 +1165,21 @@ module powerbi.extensibility.visual {
                 return DataViewObject.getValue(object, propertyId.propertyName, defaultValue);
             }
 
-            /** Gets an object from objects. */
+            // Gets an object from objects.
             export function getObject(objects: DataViewObjects, objectName: string, defaultValue?: DataViewObject): DataViewObject {
                 if (objects && objects[objectName]) {
-                    const object: DataViewObject = <DataViewObject>objects[objectName];
-
-                    return object;
+                    return <DataViewObject>objects[objectName];
                 } else { return defaultValue; }
             }
 
-            /** Gets a map of user-defined objects. */
+            // Gets a map of user-defined objects.
             export function getUserDefinedObjects(objects: DataViewObjects, objectName: string): DataViewObjectMap {
                 if (objects && objects[objectName]) {
-                    const map: DataViewObjectMap = <DataViewObjectMap>objects[objectName];
-
-                    return map;
+                    return <DataViewObjectMap>objects[objectName];
                 }
             }
 
-            /** Gets the solid color from a fill property. */
+            // Gets the solid color from a fill property.
             export function getFillColor(
                 objects: DataViewObjects,
                 propertyId: DataViewObjectPropertyIdentifier,
@@ -1213,7 +1223,7 @@ module powerbi.extensibility.visual {
                 return propertyValue;
             }
 
-            /** Gets the solid color from a fill property using only a propertyName */
+            // Gets the solid color from a fill property using only a propertyName
             export function getFillColorByPropertyName(objects: DataViewObjects, propertyName: string, defaultColor?: string): string {
                 const value: Fill = DataViewObject.getValue(objects, propertyName);
                 if (!value || !value.solid) { return defaultColor; }
@@ -1244,6 +1254,5 @@ module powerbi.extensibility.visual {
 
             return defaultValue;
         }
-        /* do not update*/
     }
 }

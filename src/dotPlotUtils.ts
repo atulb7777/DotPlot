@@ -78,7 +78,6 @@ module powerbi.extensibility.visual {
             return logDomain;
         }
 
-        // tslint:disable-next-line:no-any
         export function objectSort(objProperty: any): any {
             let sortOrder: number = 1;
             if (objProperty[0] === '-') {
@@ -86,8 +85,7 @@ module powerbi.extensibility.visual {
                 objProperty = objProperty.substr(1);
             }
 
-            // tslint:disable-next-line:no-any
-            return function (a: any, b: any): number {
+            return (a: any, b: any): number => {
                 const result: number = (a[objProperty] < b[objProperty]) ? -1 : (a[objProperty] > b[objProperty]) ? 1 : 0;
 
                 return result * sortOrder;
@@ -112,7 +110,6 @@ module powerbi.extensibility.visual {
             return decimalPlaces;
         }
 
-        // tslint:disable-next-line:no-any
         export function getDistinctElements(val: any, i: any, self: any): boolean {
             return self.indexOf(val) === i;
         }
@@ -147,7 +144,7 @@ module powerbi.extensibility.visual {
 
         export function getColor(rangeConfig: IRangeSettings, d: IDotPlotViewModel): string {
             if (d) {
-                const legendData: ILegendDataPoint[] = Visual.legendDataPoints.filter(function (legend: ILegendDataPoint): boolean {
+                const legendData: ILegendDataPoint[] = Visual.legendDataPoints.filter((legend: ILegendDataPoint): boolean => {
                     return legend.category === d.categoryColor;
                 });
 

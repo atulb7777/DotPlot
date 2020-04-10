@@ -1414,10 +1414,6 @@
                             {
                                 "value": "Right",
                                 "displayName": "Right"
-                            },
-                            {
-                                "value": "None",
-                                "displayName": "None"
                             }
                         ]
                     }

@@ -4,10 +4,10 @@
     "displayName": "Dot Plot by MAQ Software",
     "guid": "DotPlotByMAQ1823AB39DB234AB522063E728AD",
     "visualClassName": "Visual",
-    "version": "3.5.0",
+    "version": "3.5.1",
     "description": "This visual is used to display distribution using dots among multiple categories.",
-    "supportUrl": "https://github.com/maqsoftware/PowerBI-visuals/issues",
-    "gitHubUrl": "https://github.com/maqsoftware/PowerBI-visuals/"
+    "supportUrl": "https://github.com/maqsoftware/DotPlot/issues",
+    "gitHubUrl": "https://github.com/maqsoftware/DotPlot"
   },
   "apiVersion": "2.5.0",
   "author": {

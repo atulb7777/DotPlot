@@ -1414,7 +1414,7 @@ module powerbi.extensibility.visual {
             domainStart: number,
             logDomainStart: number,
             domainEnd: number,
-            logDomainEnd: number): number {
+            logDomainEnd: number): number[] {
             var configStart = xAxisConfig.start;    
             if (configStart || configStart === 0) {
                 if (xAxisConfig.end || xAxisConfig.end === 0) {
@@ -1428,7 +1428,7 @@ module powerbi.extensibility.visual {
                     logDomainStart = configStart;
                 }
             }
-            return configStart;
+            return [domainStart, logDomainStart];
         }
 
         public yAxisConfigStart(
@@ -1436,7 +1436,7 @@ module powerbi.extensibility.visual {
             domainStart: number,
             logDomainStart: number,
             domainEnd: number,
-            logDomainEnd: number): number {
+            logDomainEnd: number): number[] {
             if (yAxisConfig.start || yAxisConfig.start === 0) {
                 if (yAxisConfig.end || yAxisConfig.end === 0) {
                     if (yAxisConfig.start < yAxisConfig.end) {
@@ -1449,7 +1449,7 @@ module powerbi.extensibility.visual {
                     logDomainStart = yAxisConfig.start;
                 }
             }
-            return yAxisConfig.start;
+            return [domainStart, logDomainStart];
         }
 
         public decimalPlacesOne(
@@ -1626,7 +1626,8 @@ module powerbi.extensibility.visual {
                 Visual.xTitleText, yAxisTitleText: string = yAxisConfig.titleText ? yAxisConfig.titleText : Visual.yTitleText;
             let measureTextProperties: TextProperties, domainStart: number = dotPlotUtils.returnMin(Visual.dataValues);
             let domainEnd: number = dotPlotUtils.returnMax(Visual.dataValues);
-            domainStart = this.xAxisConfigStart(xAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
+            let domainArr = this.xAxisConfigStart(xAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
+            domainStart= domainArr[0], logDomainStart = domainArr[1];
             if (xAxisConfig.end || xAxisConfig.end === 0) {
                 if (xAxisConfig.start || xAxisConfig.start === 0) {
                     if (xAxisConfig.start < xAxisConfig.end) {
@@ -1719,7 +1720,8 @@ module powerbi.extensibility.visual {
             let xAxisHeight: number = 0; Visual.margins.right = 0; Visual.margins.top = 0;
             this.scrollableContainerVertical();
             let measureTextHeight: number, domainStart: number = dotPlotUtils.returnMin(Visual.dataValues), domainEnd: number = dotPlotUtils.returnMax(Visual.dataValues);
-            domainStart = this.yAxisConfigStart(yAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
+            let domainArr =  this.yAxisConfigStart(yAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
+            domainStart= domainArr[0], logDomainStart = domainArr[1];
             if (yAxisConfig.end || yAxisConfig.end === 0) {
                 if (yAxisConfig.start || yAxisConfig.start === 0) {
                     if (yAxisConfig.start < yAxisConfig.end) {

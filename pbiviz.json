@@ -4,7 +4,7 @@
     "displayName": "Dot Plot by MAQ Software",
     "guid": "DotPlotByMAQ1823AB39DB234AB522063E728AD",
     "visualClassName": "Visual",
-    "version": "3.5.1",
+    "version": "3.5.2",
     "description": "This visual is used to display distribution using dots among multiple categories.",
     "supportUrl": "https://github.com/maqsoftware/DotPlot/issues",
     "gitHubUrl": "https://github.com/maqsoftware/DotPlot"

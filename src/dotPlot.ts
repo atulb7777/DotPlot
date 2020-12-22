@@ -125,16 +125,16 @@ module powerbi.extensibility.visual {
         private randomSeed: number;
         private getGradColor: (t: number) => string;
         private colorScale: d3.scale.Linear<number, number>;
-        public oneLiteral: number= 0.15;
-        public twoLiteral: number= 0.9;
-        public threeLiteral: number= 0.25;
-        public fourLiteral: number= 133.33;
-        public fiveLiteral: number= 0.5;
-        public sixLiteral: number= 12;
-        public sevenLiteral: number= 20;
-        public eightLiteral: number= 50;
-        public nineLiteral: number= 30;
-        public tenLiteral: number= 100;
+        public oneLiteral: number = 0.15;
+        public twoLiteral: number = 0.9;
+        public threeLiteral: number = 0.25;
+        public fourLiteral: number = 133.33;
+        public fiveLiteral: number = 0.5;
+        public sixLiteral: number = 12;
+        public sevenLiteral: number = 20;
+        public eightLiteral: number = 50;
+        public nineLiteral: number = 30;
+        public tenLiteral: number = 100;
 
         constructor(options: VisualConstructorOptions) {
             this.host = options.host;
@@ -355,7 +355,7 @@ module powerbi.extensibility.visual {
         }
 
         public arrowFunctionHelper(group, dataPoint, host, dataView, globalMax, globalMin, yParentIndex, dotPlotdataPoints, xParentIndex, currentCat, currentXParent,
-            catMaxLen, xParentMaxLen,dataViewCategorical) {
+            catMaxLen, xParentMaxLen, dataViewCategorical) {
             for (let i: number = 0; i < group.values[0].values.length; i++) {
                 if (group.values[0].values[i] !== null) {
                     dataPoint = {
@@ -442,7 +442,7 @@ module powerbi.extensibility.visual {
             const dotPlotdataPoints: IDotPlotDataPoints = {
                 dataPoints: [], xTitleText: '', yTitleText: '', minValue: null, maxValue: null
             };
-            var dataViewCategorical= dataView.categorical;
+            var dataViewCategorical = dataView.categorical;
             let dataPoint: IDotPlotViewModel;
             if (!dataView || !dataViewCategorical || !dataViewCategorical.values || !dataViewCategorical.categories) {
                 return null;
@@ -459,7 +459,7 @@ module powerbi.extensibility.visual {
             const groups: DataViewValueColumnGroup[] = dataViewCategorical.values.grouped();
             groups.forEach((group: DataViewValueColumnGroup) => {
                 this.arrowFunctionHelper(group, dataPoint, host, dataView, globalMax, globalMin, yParentIndex, dotPlotdataPoints, xParentIndex, currentCat,
-                    currentXParent, catMaxLen, xParentMaxLen,dataViewCategorical);
+                    currentXParent, catMaxLen, xParentMaxLen, dataViewCategorical);
             });
             for (const iPoints of dotPlotdataPoints.dataPoints) {
                 iPoints.updatedXCategoryParent = `${iPoints.xCategoryParent}$$$${iPoints.categoryGroup}`;
@@ -512,7 +512,15 @@ module powerbi.extensibility.visual {
 
         public svgGridLinesAppendVertical(
             height: number,
-            width: number) {
+            x2Width: number,
+            actualWidth: number,) {
+
+            height = this.viewport.height;
+            let maxWidth: number = 0;
+            if (actualWidth > x2Width)
+                maxWidth = actualWidth
+            else
+                maxWidth = x2Width
             this.svgGridLines.append('line').classed('dotPlot_xAxisGridLines', true)
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
@@ -524,8 +532,8 @@ module powerbi.extensibility.visual {
             this.svgGridLines.append('line').classed('dotPlot_xAxisGridLines', true)
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
-                    x1: width - 2,
-                    x2: width - 2,
+                    x1: maxWidth,
+                    x2: maxWidth,
                     y1: 0,
                     y2: height
                 });
@@ -533,7 +541,7 @@ module powerbi.extensibility.visual {
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
                     x1: 0,
-                    x2: width - 2,
+                    x2: maxWidth - 2,
                     y1: 0,
                     y2: 0
                 });
@@ -541,35 +549,41 @@ module powerbi.extensibility.visual {
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
                     x1: 0,
-                    x2: width - 2,
+                    x2: maxWidth - 2,
                     y1: (height),
                     y2: (height)
                 });
         }
 
         public svgGridLinesAppendHorizontal(
-            height: number,
-            width: number) {
+            y2Height: number,
+            y2Width: number,
+            height: number) {
+            let actualHeight: number;
+            if (y2Height >= this.viewport.height)
+                actualHeight = y2Height;
+            else
+                actualHeight = height;
             this.svgGridLines.append('line').classed('dotPlot_xAxisGridLines', true)
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
                     x1: 1,
                     x2: 1,
                     y1: 3,
-                    y2: height
+                    y2: actualHeight
                 });
             this.svgGridLines.append('line').classed('dotPlot_xAxisGridLines', true)
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
-                    x1: width,
-                    x2: width,
+                    x1: y2Width,
+                    x2: y2Width,
                     y1: 3,
-                    y2: height
+                    y2: actualHeight
                 });
             this.svgGridLines.append('line').classed('dotPlot_yAxisGridLines', true)
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
-                    x1: width,
+                    x1: y2Width,
                     x2: 0,
                     y1: 3,
                     y2: 3
@@ -577,10 +591,10 @@ module powerbi.extensibility.visual {
             this.svgGridLines.append('line').classed('dotPlot_yAxisGridLines', true)
                 .attr({
                     stroke: '#A6A6A6', 'stroke-width': 1,
-                    x1: width,
+                    x1: y2Width,
                     x2: 0,
-                    y1: height,
-                    y2: height
+                    y1: actualHeight,
+                    y2: actualHeight
                 });
         }
 
@@ -723,6 +737,8 @@ module powerbi.extensibility.visual {
             tickSettings: ITickSettings,
             yAxisHeight: number,
             height: number) {
+            if (height < this.viewport.height)
+                height = this.viewport.height;
             this.yParentAxisSvg.append('line').classed('dotPlot_yAxisparentGridLines', true).attr({
                 stroke: tickSettings.categoryTickColor, 'stroke-width': this.fiveLiteral + (tickSettings.categoryTickThickness / this.tenLiteral),
                 x1: 0, x2: yAxisHeight, y1: Visual.margins.top + 3, y2: Visual.margins.top + 3
@@ -744,30 +760,31 @@ module powerbi.extensibility.visual {
         }
 
         public yAxisConfigCategoryParent(translate, height, width, tickSettings, yAxisHeight, yAxisWidth, yScale, gridLinesSetting, textProperties,
-            backgroundSetting, flipSetting, parentAxisConfigs) {
+            backgroundSetting, flipSetting, parentAxisConfigs, y2Height, y2Width) {
             if (!(!Visual.catGroupPresent && Visual.xParentPresent) || (!Visual.xParentPresent)) {
                 this.yParentAxis.selectAll('.dotPlot_xAxisGridLines').remove();
                 let yTicks: any = this.yAxisSvg.selectAll('.dotPlot_yAxis .tick text');
                 const yTicksLen: number = yTicks.size(), yParentTicks: string[] = [];
                 let isBool: boolean = false, iCounter: number = 0, j: number = 0, i: number = 0;
-                translate = height;
-                this.svgGridLinesAppendHorizontal(height, width);
+                if (y2Height >= this.viewport.height)
+                    translate = y2Height;
+                else
+                    translate = height;
+                this.svgGridLinesAppendHorizontal(y2Height, y2Width, height);
                 if (tickSettings.showCategoryTicks && Visual.xParentPresent) {
-                    this.yAxisConfigShowHorizontalHelperOne(tickSettings, yAxisHeight, height);
+                    this.yAxisConfigShowHorizontalHelperOne(tickSettings, yAxisHeight, y2Height);
                 }
                 if (tickSettings.showAxisTicks) {
-                    this.yAxisConfigShowHorizontalHelperTwo(tickSettings, yAxisWidth, height);
+                    this.yAxisConfigShowHorizontalHelperTwo(tickSettings, yAxisWidth, y2Height);
                 }
                 for (i = 0; i < yTicksLen; i++) {
                     isBool = false;
                     const parent: string = yTicks[0][i].getAttribute('data-parent');
-                    let yWidth: number = 0, xAttr: any = yTicks[0][i].parentNode.getAttribute('transform').substring(this.sixLiteral, yTicks[0][i].parentNode
-                        .getAttribute('transform').lastIndexOf(',') > this.sixLiteral ? yTicks[0][i].parentNode.getAttribute('transform')
+                    let yWidth: number = 0, xAttr: any = yTicks[0][i].parentNode.getAttribute('transform').substring(this.sixLiteral, yTicks[0][i].parentNode.getAttribute('transform').lastIndexOf(',') > this.sixLiteral ? yTicks[0][i].parentNode.getAttribute('transform')
                             .lastIndexOf(',') : yTicks[0][i].parentNode.getAttribute('transform').length - 1);
                     for (j = i; j < yTicksLen; j++) {
                         const nextParent: string = yTicks[0][j].getAttribute('data-parent');
-                        let xNextAttr: string = yTicks[0][j].parentNode.getAttribute('transform').substring(this.sixLiteral, yTicks[0][j].parentNode
-                            .getAttribute('transform').lastIndexOf(',') > this.sixLiteral ? yTicks[0][j].parentNode.getAttribute('transform')
+                        let xNextAttr: string = yTicks[0][j].parentNode.getAttribute('transform').substring(this.sixLiteral, yTicks[0][j].parentNode.getAttribute('transform').lastIndexOf(',') > this.sixLiteral ? yTicks[0][j].parentNode.getAttribute('transform')
                                 .lastIndexOf(',') : yTicks[0][j].parentNode.getAttribute('transform').length - 1);
                         if (parent === nextParent) {
                             isBool = true;
@@ -798,11 +815,10 @@ module powerbi.extensibility.visual {
                                     this.svgGridLines.append('line').classed('dotPlot_yAxisGridLines', true).attr({
                                         stroke: gridLinesSetting.categoryColor, 'stroke-width': this.fiveLiteral + (gridLinesSetting.categoryThickness / this.tenLiteral),
                                         'stroke-dasharray': gridLinesSetting.categoryStyle === 'dashed' ? '5, 5' : gridLinesSetting.categoryStyle === 'dotted'
-                                            ? '1, 5' : null, y1: -(yScale.rangeBand() / 2), y2: -(yScale.rangeBand() / 2), x1: 0, x2: width, transform: `translate(0, ${xNextAttr})`
+                                            ? '1, 5' : null, y1: -(yScale.rangeBand() / 2), y2: -(yScale.rangeBand() / 2), x1: 0, x2: y2Width, transform: `translate(0, ${xNextAttr})`
                                     });
                                 }
-                            }
-                            break;
+                            } break;
                         } else {
                             xNextAttr = yTicks[0][j - 1].parentNode.getAttribute('transform').substring(this.sixLiteral, yTicks[0][j - 1]
                                 .parentNode.getAttribute('transform').lastIndexOf(',') > this.sixLiteral ? yTicks[0][j - 1]
@@ -812,8 +828,7 @@ module powerbi.extensibility.visual {
                                     stroke: '#A6A6A6', 'stroke-width': 1,
                                     y1: -(yScale.rangeBand() / 2), y2: -(yScale.rangeBand() / 2), x1: 0, x2: width, transform: `translate(0, ${xNextAttr})`
                                 });
-                            }
-                            break;
+                            }break;
                         }
                     }
                     if (j === yTicksLen && isBool) {
@@ -835,8 +850,7 @@ module powerbi.extensibility.visual {
                         translate -= (yWidth);
                         this.svgGridLines.append('rect').classed('dotPlot_xAxisGridRect', true).attr({
                             fill: iCounter % 2 === 0 ? backgroundSetting.bgPrimaryColor : backgroundSetting.bgSecondaryColor,
-                            x: 0, y: 0, width: width - (1 + (gridLinesSetting.categoryThickness / this.tenLiteral)) < 0 ? 0 :
-                                width - (this.fiveLiteral + (gridLinesSetting.categoryThickness / this.tenLiteral)), height: yWidth,
+                            x: 0, y: 0, width: y2Width, height: yWidth,
                             'fill-opacity': (this.tenLiteral - backgroundSetting.bgTransparency) / this.tenLiteral
                         }).attr('transform', `translate(0, ${translate})`);
                     }
@@ -861,7 +875,9 @@ module powerbi.extensibility.visual {
             yAxisHeight: number,
             gridLinesSetting: IGridLinesSettings,
             parentAxisConfigs: IParentAxisSettings,
-            backgroundSetting: IBackgroundSettings) {
+            backgroundSetting: IBackgroundSettings,
+            y2Height: number,
+            y2Width: number) {
             if (yAxisConfig.showTitle) {
                 const yTitleTextProps: TextProperties = {
                     fontFamily: yAxisConfig.titleFontFamily, fontSize: `${yAxisConfig.titleSize}px`, text: yAxisTitleText
@@ -891,7 +907,7 @@ module powerbi.extensibility.visual {
             this.xAxis.selectAll('path').remove();
             // For category Parent
             this.yAxisConfigCategoryParent(translate, height, width, tickSettings, yAxisHeight, yAxisWidth, yScale, gridLinesSetting, textProperties,
-                backgroundSetting, flipSetting, parentAxisConfigs);
+                backgroundSetting, flipSetting, parentAxisConfigs, y2Height, y2Width);
             this.yParentAxisSvg.selectAll('.dotPlot_yParentAxis text').style('font-size', `${parentAxisConfigs.fontSize}px`)
                 .style('font-family', parentAxisConfigs.fontFamily).style('fill', parentAxisConfigs.fontColor);
             if (!Visual.catGroupPresent && Visual.xParentPresent) {
@@ -907,20 +923,24 @@ module powerbi.extensibility.visual {
             }
         }
 
-        public xAxisConfigCategoryParent(height, width, tickSettings, xAxisParentHeight, xAxisHeight, xScale, gridLinesSetting, textProperties, backgroundSetting, 
-            translate, parentAxisConfigs) {
+        public xAxisConfigCategoryParent(height, width, tickSettings, xAxisParentHeight, xAxisHeight, xScale, gridLinesSetting, textProperties, backgroundSetting, translate, parentAxisConfigs, x2Width, actualWidth, x2Height) {
+            let maxWidth = 0;
+            if (actualWidth > x2Width)
+                maxWidth = actualWidth;
+            else
+                maxWidth = x2Width;
             if (!(!Visual.catGroupPresent && Visual.xParentPresent) || (!Visual.xParentPresent)) {
                 let xTicks: any = this.xAxisSvg.selectAll('.dotPlot_xAxis .tick text');
                 const xTicksLen: any = xTicks.size(), xParentTicks: string[] = [];
                 let isBool: boolean = false, iCounter: number = 0, j: number = 0, i: number = 0;
-                this.svgGridLinesAppendVertical(height, width);
+                this.svgGridLinesAppendVertical(height, x2Width, actualWidth);
                 if (tickSettings.showCategoryTicks && Visual.xParentPresent) {
                     this.xParentAxisSvg.append('line').classed('dotPlot_xAxisparentGridLines', true).attr({
                         stroke: tickSettings.categoryTickColor, 'stroke-width': this.fiveLiteral + (tickSettings.categoryTickThickness / this.tenLiteral), x1: 1, x2: 1, y1: xAxisParentHeight + 5, y2: 0
                     });
                     this.xParentAxisSvg.append('line').classed('dotPlot_xAxisparentGridLines', true).attr({
                         stroke: tickSettings.categoryTickColor, 'stroke-width': this.fiveLiteral + (tickSettings.categoryTickThickness / this.tenLiteral),
-                        x1: width - 2, x2: width - 2, y1: xAxisParentHeight + 5, y2: 0
+                        x1: maxWidth - 2, x2: maxWidth - 2, y1: xAxisParentHeight + 5, y2: 0
                     });
                 }
                 if (tickSettings.showAxisTicks) {
@@ -931,14 +951,10 @@ module powerbi.extensibility.visual {
                 for (i = 0; i < xTicksLen; i++) {
                     isBool = false;
                     const parent: string = xTicks[0][i].getAttribute('data-parent');
-                    let xWidth: number = 0, xAttr: any = xTicks[0][i].parentNode.getAttribute('transform')
-                        .substring(10, xTicks[0][i].parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][i]
-                            .parentNode.getAttribute('transform').indexOf(',') : xTicks[0][i].parentNode.getAttribute('transform').length - 1);
+                    let xWidth: number = 0, xAttr: any = xTicks[0][i].parentNode.getAttribute('transform').substring(10, xTicks[0][i].parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][i].parentNode.getAttribute('transform').indexOf(',') : xTicks[0][i].parentNode.getAttribute('transform').length - 1);
                     for (j = i; j < xTicksLen; j++) {
                         const nextParent: string = xTicks[0][j].getAttribute('data-parent');
-                        let xNextAttr: string = xTicks[0][j].parentNode.getAttribute('transform')
-                            .substring(10, xTicks[0][j].parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][j]
-                                .parentNode.getAttribute('transform').indexOf(',') : xTicks[0][j].parentNode.getAttribute('transform').length - 1);
+                        let xNextAttr: string = xTicks[0][j].parentNode.getAttribute('transform').substring(10, xTicks[0][j].parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][j].parentNode.getAttribute('transform').indexOf(',') : xTicks[0][j].parentNode.getAttribute('transform').length - 1);
                         if (parent === nextParent) {
                             isBool = true;
                             xWidth += xScale.rangeBand();
@@ -949,9 +965,8 @@ module powerbi.extensibility.visual {
                                 });
                             }
                         } else if (isBool) {
-                            xAttr = (parseFloat(xAttr) + parseFloat(xTicks[0][j - 1].parentNode.getAttribute('transform')
-                                .substring(10, xTicks[0][j - 1].parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][j - 1]
-                                    .parentNode.getAttribute('transform').indexOf(',') : xTicks[0][j - 1].parentNode.getAttribute('transform').length - 1))) / 2;
+                            xAttr = (parseFloat(xAttr) + parseFloat(xTicks[0][j - 1].parentNode.getAttribute('transform').substring(10, xTicks[0][j - 1].parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][j - 1]
+                                .parentNode.getAttribute('transform').indexOf(',') : xTicks[0][j - 1].parentNode.getAttribute('transform').length - 1))) / 2;
                             i = j - 1;
                             xNextAttr = xTicks[0][i].parentNode.getAttribute('transform').substring(10, xTicks[0][i].parentNode
                                 .getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][i].parentNode.getAttribute('transform')
@@ -971,8 +986,7 @@ module powerbi.extensibility.visual {
                                             x1: xScale.rangeBand() / 2, x2: xScale.rangeBand() / 2, y1: 0, y2: height, transform: `translate(${xNextAttr}, 0)`
                                         });
                                 }
-                            }
-                            break;
+                            }break;
                         } else {
                             xNextAttr = xTicks[0][j - 1].parentNode.getAttribute('transform').substring(10, xTicks[0][j - 1]
                                 .parentNode.getAttribute('transform').indexOf(',') >= 0 ? xTicks[0][j - 1]
@@ -982,8 +996,7 @@ module powerbi.extensibility.visual {
                                     stroke: '#A6A6A6', 'stroke-width': 1, x1: xScale.rangeBand() / 2, x2: xScale.rangeBand() / 2,
                                     y1: 0, y2: height, transform: `translate(${xNextAttr}, 0)`
                                 });
-                            }
-                            break;
+                            } break;
                         }
                     }
                     if (j === xTicksLen && isBool) {
@@ -1024,7 +1037,10 @@ module powerbi.extensibility.visual {
             gridLinesSetting: IGridLinesSettings,
             backgroundSetting: IBackgroundSettings,
             translate: number,
-            parentAxisConfigs: IParentAxisSettings) {
+            parentAxisConfigs: IParentAxisSettings,
+            x2Width: number,
+            actualWidth: number,
+            x2Height: number) {
             if (xAxisConfig.showTitle) {
                 const xTitleTextProps: TextProperties = {
                     fontFamily: xAxisConfig.titleFontFamily, fontSize: `${xAxisConfig.titleSize}px`, text: xAxisTitleText
@@ -1046,8 +1062,8 @@ module powerbi.extensibility.visual {
                 return d.substring(0, d.indexOf('$$$') >= 0 ? d.indexOf('$$$') : 0);
             });
             // For category Parent
-            this.xAxisConfigCategoryParent(height, width, tickSettings, xAxisParentHeight, xAxisHeight, xScale, gridLinesSetting, textProperties, 
-                backgroundSetting, translate, parentAxisConfigs);
+            this.xAxisConfigCategoryParent(height, width, tickSettings, xAxisParentHeight, xAxisHeight, xScale, gridLinesSetting, textProperties,
+                backgroundSetting, translate, parentAxisConfigs, x2Width, actualWidth, x2Height);
             this.xParentAxisSvg.selectAll('.dotPlot_xParentAxis text').style('font-size', `${parentAxisConfigs.fontSize}px`)
                 .style('font-family', parentAxisConfigs.fontFamily).style('fill', parentAxisConfigs.fontColor);
             this.xAxis.selectAll('path').remove();
@@ -1070,8 +1086,15 @@ module powerbi.extensibility.visual {
             widthForXAxis: number,
             textProperties: TextProperties,
             xAxisFormatter: utils.formatting.IValueFormatter,
-            width: number) {
+            width: number,
+            y2Height: number,
+            y2Width: number) {
             // Draw X Axis grid lines
+            let actualHeight: number;
+            if (y2Height >= this.viewport.height)
+                actualHeight = y2Height;
+            else
+                actualHeight = height
             let xTicks: any = this.xAxisSvg.selectAll('.dotPlot_xAxis .tick');
             const tickLeng: number = xTicks.size();
             let start: number = 0;
@@ -1086,7 +1109,7 @@ module powerbi.extensibility.visual {
                         'stroke-dasharray': gridLinesSetting.axisStyle === 'dashed' ? '5, 5' : gridLinesSetting.axisStyle === 'dotted' ? '1, 5' : null,
                         x1: xCoordinate,
                         x2: xCoordinate,
-                        y1: (height),
+                        y1: (actualHeight),
                         y2: 3
                     });
                 }
@@ -1131,11 +1154,18 @@ module powerbi.extensibility.visual {
             yAxisFormatter: utils.formatting.IValueFormatter,
             yAxisWidth: number,
             parentAxisConfigs: IParentAxisSettings,
-            yParentScale: any) {
+            yParentScale: any,
+            x2Width: number) {
             // Draw Y Axis grid lines
             let yTicks: any = this.yAxisSvg.selectAll('.dotPlot_yAxis .tick');
             const tickLeng: any = yTicks.size();
             let start: number = 0;
+            let maxWidth = 0;
+            if (this.viewport.width > x2Width) {
+                maxWidth = this.viewport.width;
+            }
+            else
+                maxWidth = x2Width
             if (gridLinesSetting.showAxisGridLines) {
                 for (; start < tickLeng; start++) {
                     const yCoordinate: string = yTicks[0][start].getAttribute('transform').substring(this.sixLiteral, yTicks[0][start].getAttribute('transform').length - 1);
@@ -1144,7 +1174,7 @@ module powerbi.extensibility.visual {
                         'stroke-width': this.threeLiteral + (gridLinesSetting.thickness / this.fourLiteral),
                         'stroke-dasharray': gridLinesSetting.axisStyle === 'dashed' ? '5, 5' : gridLinesSetting.axisStyle === 'dotted' ? '1, 5' : null,
                         x1: 1,
-                        x2: width - 2,
+                        x2: maxWidth,
                         y1: yCoordinate,
                         y2: yCoordinate
                     });
@@ -1415,7 +1445,7 @@ module powerbi.extensibility.visual {
             logDomainStart: number,
             domainEnd: number,
             logDomainEnd: number): number[] {
-            var configStart = xAxisConfig.start;    
+            var configStart = xAxisConfig.start;
             if (configStart || configStart === 0) {
                 if (xAxisConfig.end || xAxisConfig.end === 0) {
                     if (configStart < xAxisConfig.end) {
@@ -1514,6 +1544,8 @@ module powerbi.extensibility.visual {
             parentAxisConfigs: IParentAxisSettings,
             xAxisTitleText: string,
             xAxisFormatter: utils.formatting.IValueFormatter) {
+            let y2Height = (minWidth * yAxisPoints);
+            let y2Width = width - this.sevenLiteral < 0 ? 0 : width - this.sevenLiteral;
             this.scrollLogicHorizontal(minWidth, yAxisPoints, height, width, xScale, yScale, yAxisHeight, originalSvgHeight, yTitleHeight, widthForXAxis, heightForXAxis);
             const yAxis: d3.svg.Axis = d3.svg.axis().scale(yScale).orient('left'), xAxis: d3.svg.Axis = d3.svg.axis().scale(xScale)
                 .ticks(axis.getRecommendedNumberOfTicksForXAxis(width)).orient('bottom');
@@ -1528,14 +1560,14 @@ module powerbi.extensibility.visual {
             // Update y-Axis labels
             if (yAxisConfig.show) {
                 this.yAxisConfigShowHorizontal(yAxisConfig, yAxisTitleText, heightForXAxis, yAxis, textProperties, flipSetting, yScale, yAxisWidth,
-                    translate, height, width, tickSettings, yAxisHeight, gridLinesSetting, parentAxisConfigs, backgroundSetting);
+                    translate, height, width, tickSettings, yAxisHeight, gridLinesSetting, parentAxisConfigs, backgroundSetting, y2Height, y2Width);
             }
             else {
                 this.yAxisSvg.selectAll('.dotPlot_yAxis .tick text').text('');
                 this.yAxisSvg.selectAll('path').remove();
             }
             if (xAxisConfig.show) {
-                this.xAxisConfigShowHorizontal(gridLinesSetting, height, xAxisConfig, xAxisTitleText, widthForXAxis, textProperties, xAxisFormatter, width);
+                this.xAxisConfigShowHorizontal(gridLinesSetting, height, xAxisConfig, xAxisTitleText, widthForXAxis, textProperties, xAxisFormatter, width, y2Height, y2Width);
             }
             else {
                 this.xAxisSvg.selectAll('.dotPlot_xAxis .tick text').text(''); this.xAxis.selectAll('path').remove();
@@ -1627,7 +1659,7 @@ module powerbi.extensibility.visual {
             let measureTextProperties: TextProperties, domainStart: number = dotPlotUtils.returnMin(Visual.dataValues);
             let domainEnd: number = dotPlotUtils.returnMax(Visual.dataValues);
             let domainArr = this.xAxisConfigStart(xAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
-            domainStart= domainArr[0], logDomainStart = domainArr[1];
+            domainStart = domainArr[0], logDomainStart = domainArr[1];
             if (xAxisConfig.end || xAxisConfig.end === 0) {
                 if (xAxisConfig.start || xAxisConfig.start === 0) {
                     if (xAxisConfig.start < xAxisConfig.end) {
@@ -1714,14 +1746,14 @@ module powerbi.extensibility.visual {
 
         public flipSettingVertical(xAxisConfig, yAxisConfig, logDomainStart, logDomainEnd, yAxisFormatter, format, yAxisWidth, parentAxisConfigs, xAxisParentHeight,
             width, height, options, originalSvgHeight, data, legendGroupContainer, logDomain, scalesArray, dataSizeValues, rangeMax, rangeMin, tickSettings,
-            gridLinesSetting, backgroundSetting, translate, yParentScale) {
+            gridLinesSetting, backgroundSetting, translate, yParentScale, actualWidth) {
             let xAxisTitleText: string = xAxisConfig.titleText ? xAxisConfig.titleText : Visual.xTitleText, yAxisTitleText: string = yAxisConfig.titleText
                 ? yAxisConfig.titleText : Visual.yTitleText;
             let xAxisHeight: number = 0; Visual.margins.right = 0; Visual.margins.top = 0;
             this.scrollableContainerVertical();
             let measureTextHeight: number, domainStart: number = dotPlotUtils.returnMin(Visual.dataValues), domainEnd: number = dotPlotUtils.returnMax(Visual.dataValues);
-            let domainArr =  this.yAxisConfigStart(yAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
-            domainStart= domainArr[0], logDomainStart = domainArr[1];
+            let domainArr = this.yAxisConfigStart(yAxisConfig, domainStart, logDomainStart, domainEnd, logDomainEnd);
+            domainStart = domainArr[0], logDomainStart = domainArr[1];
             if (yAxisConfig.end || yAxisConfig.end === 0) {
                 if (yAxisConfig.start || yAxisConfig.start === 0) {
                     if (yAxisConfig.start < yAxisConfig.end) {
@@ -1811,7 +1843,7 @@ module powerbi.extensibility.visual {
             minWidth = this.minWidthXAxisLabels(xAxisConfig, minWidth);
             this.scrollLogicTwo(minWidth, xAxisPoints, width, height, scalesArray[0], scalesArray[1], xAxisHeight, widthForXAxis, heightForXAxis, options,
                 yAxisConfig, logDomain, yAxisFormatter, xAxisConfig, xAxisTitleText, textProperties, tickSettings, xAxisParentHeight,
-                gridLinesSetting, backgroundSetting, translate, parentAxisConfigs, yAxisTitleText, yAxisWidth, yParentScale); // Scroll logic
+                gridLinesSetting, backgroundSetting, translate, parentAxisConfigs, yAxisTitleText, yAxisWidth, yParentScale, actualWidth); // Scroll logic
             return scalesArray;
         }
 
@@ -1879,6 +1911,7 @@ module powerbi.extensibility.visual {
                 });
                 Visual.xTitleText = data.xTitleText;
                 Visual.yTitleText = data.yTitleText;
+                let actualWidth = this.viewport.width;
                 let width: number = _.clone(options.viewport.width), height: number = _.clone(options.viewport.height);
                 let dimensions: any = [height, width];
                 const dataSizeValues: number[] = [];
@@ -1898,7 +1931,7 @@ module powerbi.extensibility.visual {
                 const legendOrient: LegendPosition = Visual.legend.getOrientation();
                 isScrollPresent = isScrollPresent || !Visual.catSizePresent;
                 this.renderLegend(dataView, legendSetting, isScrollPresent);
-                this.legendDotSvg.attr({ class: 'dotPlot_sizeLegend', height: 0, width: 0 }).style('position', 'absolute'); 
+                this.legendDotSvg.attr({ class: 'dotPlot_sizeLegend', height: 0, width: 0 }).style('position', 'absolute');
                 // Position chart, legends, dotPlot legends according to legend position.
                 this.legendGroupContainerUpdate(legendGroupContainer);
                 dimensions = this.legendPositionUpdate(legendSetting, dimensions, legendOrient, legendHeight, legendWidth, isScrollPresent, options, legendContainer);
@@ -1918,14 +1951,27 @@ module powerbi.extensibility.visual {
                 rangeMax = this.radiusScaleMax(rangeConfig, rangeMax, rangeMin);
                 let scalesArray: any = [xScale, yScale, rScale];
                 if (flipSetting.orient === 'horizontal') {
-                    scalesArray = this.flipSettingHorizontal(xAxisConfig, yAxisConfig, logDomainStart, logDomainEnd, format, xAxisFormatter, xAxisParentHeight, yAxisWidth, 
-                        flipSetting, parentAxisConfigs, yAxisHeight, dimensions[1], dimensions[0], originalSvgHeight, originalSvgWidth, data, legendGroupContainer, options, 
+                    scalesArray = this.flipSettingHorizontal(xAxisConfig, yAxisConfig, logDomainStart, logDomainEnd, format, xAxisFormatter, xAxisParentHeight, yAxisWidth,
+                        flipSetting, parentAxisConfigs, yAxisHeight, dimensions[1], dimensions[0], originalSvgHeight, originalSvgWidth, data, legendGroupContainer, options,
                         logDomain, scalesArray, dataSizeValues, rangeMin, rangeMax, tickSettings, translate, gridLinesSetting, backgroundSetting);
                 } else {
-                    scalesArray = this.flipSettingVertical(xAxisConfig, yAxisConfig, logDomainStart, logDomainEnd, yAxisFormatter, format, yAxisWidth, parentAxisConfigs, 
-                        xAxisParentHeight, dimensions[1], dimensions[0], options, originalSvgHeight, data, legendGroupContainer, logDomain, scalesArray, dataSizeValues, 
-                        rangeMax, rangeMin, tickSettings, gridLinesSetting, backgroundSetting, translate, yParentScale);
+                    scalesArray = this.flipSettingVertical(xAxisConfig, yAxisConfig, logDomainStart, logDomainEnd, yAxisFormatter, format, yAxisWidth, parentAxisConfigs,
+                        xAxisParentHeight, dimensions[1], dimensions[0], options, originalSvgHeight, data, legendGroupContainer, logDomain, scalesArray, dataSizeValues,
+                        rangeMax, rangeMin, tickSettings, gridLinesSetting, backgroundSetting, translate, yParentScale, actualWidth);
                 }
+                this.svg.on("contextmenu", () => {
+                    debugger
+                    const mouseEvent: MouseEvent = <MouseEvent>d3.event;
+                    const eventTarget: EventTarget = mouseEvent.target;
+                    const dataPoint: any = d3.select(eventTarget).datum();
+                    if (dataPoint !== undefined) {
+                        this.selectionManager.showContextMenu(dataPoint, {
+                            x: mouseEvent.clientX,
+                            y: mouseEvent.clientY
+                        });
+                        mouseEvent.preventDefault();
+                    }
+                });
                 this.helperFunctionUpdate(data, scalesArray, visualContext, rangeConfig, highlightSetting);
                 this.events.renderingFinished(options);
             } catch (exception) {
@@ -1958,7 +2004,10 @@ module powerbi.extensibility.visual {
             parentAxisConfigs: IParentAxisSettings,
             yAxisTitleText: string,
             yAxisWidth: number,
-            yParentScale: number) {
+            yParentScale: number,
+            actualWidth: number) {
+            let x2Width = (minWidth * xAxisPoints);
+            let x2Height = height - this.sevenLiteral < 0 ? 0 : height - this.sevenLiteral;
             this.scrollLogicVertical(minWidth, xAxisPoints, width, height, xScale, yScale, xAxisHeight, widthForXAxis, heightForXAxis, options);
             const xAxis: d3.svg.Axis = d3.svg.axis().scale(xScale).orient('bottom');
             const yAxis: d3.svg.Axis = d3.svg.axis().scale(yScale).ticks(axis.getRecommendedNumberOfTicksForYAxis(height - Visual.margins.bottom - Visual.margins.top))
@@ -1978,7 +2027,7 @@ module powerbi.extensibility.visual {
             this.xAxis.selectAll('.dotPlot_xAxisGridLines').remove();
             if (xAxisConfig.show) {
                 this.xAxisConfigShowVertical(xAxisConfig, widthForXAxis, xAxisTitleText, xAxis, textProperties, xScale, height, width, tickSettings,
-                    xAxisParentHeight, xAxisHeight, gridLinesSetting, backgroundSetting, translate, parentAxisConfigs);
+                    xAxisParentHeight, xAxisHeight, gridLinesSetting, backgroundSetting, translate, parentAxisConfigs, x2Width, actualWidth, x2Height);
             }
             else {
                 this.xAxisSvg.selectAll('.dotPlot_xAxis .tick text').text('');
@@ -1986,7 +2035,7 @@ module powerbi.extensibility.visual {
             }
             if (yAxisConfig.show) {
                 this.yAxisConfigShowVertical(gridLinesSetting, width, yAxisConfig, height, yAxisTitleText, textProperties, yAxisFormatter,
-                    yAxisWidth, parentAxisConfigs, yParentScale);
+                    yAxisWidth, parentAxisConfigs, yParentScale, x2Width);
             }
             else {
                 this.yAxisSvg.selectAll('.dotPlot_yAxis .tick text').text('');
@@ -2006,7 +2055,7 @@ module powerbi.extensibility.visual {
             // Highlighting logic
             this.highlightingLogic(dots);
             // Hover logic
-            this.hoverLogic(visualContext, dots, rangeConfig,this.oneLiteral,this.twoLiteral);
+            this.hoverLogic(visualContext, dots, rangeConfig, this.oneLiteral, this.twoLiteral);
             // Highlight mode logic
             this.highlightModeLogic(highlightSetting, dots, visualContext, rangeConfig);
             // Document click
